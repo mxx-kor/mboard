@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Welcome to Firebase Hosting</title>
+    <title>Mboard</title>
 
     <!-- update the version number as needed -->
     <script defer src="/__/firebase/9.6.6/firebase-app-compat.js"></script>
@@ -15,27 +15,8 @@
       defer
       src="/__/firebase/9.6.6/firebase-firestore-compat.js"
     ></script>
-    <script
-      defer
-      src="/__/firebase/9.6.6/firebase-functions-compat.js"
-    ></script>
-    <script
-      defer
-      src="/__/firebase/9.6.6/firebase-messaging-compat.js"
-    ></script>
     <script defer src="/__/firebase/9.6.6/firebase-storage-compat.js"></script>
-    <script
-      defer
-      src="/__/firebase/9.6.6/firebase-analytics-compat.js"
-    ></script>
-    <script
-      defer
-      src="/__/firebase/9.6.6/firebase-remote-config-compat.js"
-    ></script>
-    <script
-      defer
-      src="/__/firebase/9.6.6/firebase-performance-compat.js"
-    ></script>
+
     <!-- 
       initialize the SDK after all desired features are loaded, set useEmulator to false
       to avoid connecting the SDK to running emulators.
@@ -43,9 +24,98 @@
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
   </head>
   <body>
-    <div class="bg-teal-400 text-center">안녕</div>
-    <span class="text-3xl">확인</span>
+    <!-- This example requires Tailwind CSS v2.0+ -->
+    <div class="flex flex-col">
+      <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+          <div
+            class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
+          >
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th
+                    scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Name
+                  </th>
+                  <th
+                    scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Title
+                  </th>
+                  <th
+                    scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Date
+                  </th>
+                  <th
+                    scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Role
+                  </th>
+                  <th scope="col" class="relative px-6 py-3">
+                    <span class="sr-only">Edit</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200" id="rows">
+                <tr>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="flex items-center">
+                      <div class="flex-shrink-0 h-10 w-10">
+                        <img
+                          class="h-10 w-10 rounded-full"
+                          src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60"
+                          alt=""
+                        />
+                      </div>
+                      <div class="ml-4">
+                        <div class="text-sm font-medium text-gray-900">
+                          Jane Cooper
+                        </div>
+                        <div class="text-sm text-gray-500">
+                          jane.cooper@example.com
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900">
+                      Regional Paradigm Technician
+                    </div>
+                    <div class="text-sm text-gray-500">Optimization</div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <span
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                    >
+                      Active
+                    </span>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    Admin
+                  </td>
+                  <td
+                    class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"
+                  >
+                    <a href="#" class="text-indigo-600 hover:text-indigo-900"
+                      >Edit</a
+                    >
+                  </td>
+                </tr>
 
+                <!-- More people... -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const loadEl = document.querySelector("#load");
@@ -56,11 +126,56 @@
         // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
         firebase
           .firestore()
-          .collection("확인")
+          .collection("Board")
           .get()
           .then((items) => {
             items.forEach((doc) => {
               console.log(doc.data());
+              let rows = document.getElementById("rows");
+              rows.innerHTML = `<tr>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="flex items-center">
+                      <div class="flex-shrink-0 h-10 w-10">
+                        <img
+                          class="h-10 w-10 rounded-full"
+                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAM1BMVEXk5ueutLfn6eqrsbTp6+zg4uOwtrnJzc/j5earsbW0uby4vcDQ09XGyszU19jd3+G/xMamCvwDAAAFLklEQVR4nO2d2bLbIAxAbYE3sDH//7WFbPfexG4MiCAcnWmnrzkjIRaD2jQMwzAMwzAMwzAMwzAMwzAMwzAMwzAMwzAMwzAMw5wQkHJczewxZh2lhNK/CBOQo1n0JIT74/H/qMV0Z7GU3aCcVPuEE1XDCtVLAhgtpme7H0s1N1U7QjO0L8F7llzGeh1hEG/8Lo7TUmmuSrOfns9xnGXpXxsONPpA/B6OqqstjC6Ax/0ujkNdYQQbKNi2k64qiiEZ+ohi35X+2YcZw/WujmslYewiAliVYrxgJYrdwUmwXsU+RdApUi83oNIE27YvrfB/ZPg8+BJETXnqh9CVzBbTQHgojgiCvtqU9thFJg/CKz3VIMKMEkIXxIWqIpIg2SkjYj+xC816mrJae2aiWGykxRNsW0UwiJghJDljYI5CD8GRiCtIsJxizYUPQ2pzItZy5pcisTRdk/a9m4amtNNfBuQkdVhSaYqfpNTSFGfb9GRIakrE2Pm+GFLaCQPqiu0OpWP+HMPQQcgQMiQprWXNmsVwIjQjYi/ZrhAqNTCgr2gu0Jnz85RSSjso0HkMFZ0YZjKkc26a/jlmh9JiDyDxi9oeorTYAzZkwwoMz19pzj9bnH/GP/+qbchjSGflneWYhtTuKdMOmNKZcJ5TjInQKcYXnESd/jQxy0ENpULTNGOGgxpap/oyw9pbUAqhfx2Dbkhovvfgz4iUzoM9+GlK6/Mh4q29hyC1mwro30hpVVLPF9wYQr71RazOeM5/cw81iBRD+A03aM9/C/obbrKjbYSpCmIVG3qT/Q8oeUo3Rz0IL7vI1tEbCB9pSiu8I/aV8x3Kg/BGWrWp4ZVs0nZfmAoEG4h/61yHYIJiFSl6Q0Vk6tTW1N8kYp8hdOkfHYYMXd2Qft+8CYwqYDSKvqIh+MCF8Wgca2u/cwdgeW3TtuVn6+1oBs3yLo5C2JpK6CvQzGpfUkz9UG/87gCsi5o2LIXolxN0FbwAsjOLEr+YJmXn7iR6N0BCt5p5cMxm7eAsfS+/CACQf4CTpKjzgkvr2cVarVTf96372yut7XLJ1sa7lv6VcfgYrWaxqr3Wlo1S6pvStr22sxOtTNPLzdY3nj20bPP+ejFdJYkLsjGLdtPBEbe/mr2bQKiXWJDroA+vtzc0p9aahuwqHMDYrQEXHEw9jwQl3drMpts9JBU1SdktPe5FBRdJQ6bwXBpa57ib2A8kukQDzMjh++Uo7Fo6Wd02Pkf4fknqoo4HtvAIjsqUcjx6DIPgWCaOML9rKI/oqD9/lgNrn+eF+p7j8tnzHBiR7+kdUGw/+V1Kzkc75mMy6U+FMaxjPibiM1U1uGM+puInHpmALZCgP4pt7i840MV8+0R1zPsRB6UTcqpizncYwZ89syDydfyWCwXB1l8/zRNGWbTG/GHKUm9AkxHMc/EGSk3z2+ArEhPEV5TUBLEvUGFcjEUH80J/jveTGOAJEljJbILWGQT3zRYiwuKsUXN1EEJAzBhRJFll7mBUG7KD8EqPkKekBREaL8hMDZLQSG6AQjtHPYmvTQnX0TtpC1SYCe2YdkkyLP3jj5BSbKiuR585eQhTgoje6yIb0Yb0C+mV6EYvebqw5SDy2WmubogZiF2AVxPC2FpDf8H2Q9QWo6IkjUxTWVEI3WY/wrCeSuqJ+eRWzXR/JXwgVjUMozbCOfoEZiSiKVGepqv5CJ8RyR4D7xBeamqa7z3BJ/z17JxuBPdv93d/a2Ki878MMAzDMAzDMAzDMAzDMF/KP09VUmxBAiI3AAAAAElFTkSuQmCC"
+                          alt=""
+                        />
+                      </div>
+                      <div class="ml-4">
+                        <div class="text-sm font-medium text-gray-900">
+                          ${doc.data().name}
+                        </div>
+                        <div class="text-sm text-gray-500">
+                          minjae7728@naver.com
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900">
+                      ${doc.data().title}
+                    </div>
+                    <div class="text-sm text-gray-500">Optimization</div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <span
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                    >
+                    ${doc.data().date}
+                    </span>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    ${doc.data().role}
+                  </td>
+                  <td
+                    class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"
+                  >
+                    <a href="#" class="text-indigo-600 hover:text-indigo-900"
+                      >Edit</a
+                    >
+                  </td>
+                </tr>`;
             });
           });
         // firebase.functions().httpsCallable('yourFunction')().then(() => { });
