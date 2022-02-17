@@ -1,0 +1,64 @@
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Mboard</title>
+  </head>
+  <body>
+    <div class="container mt-3">
+      <div class="mb-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="name"
+          id="name-new"
+        />
+      </div>
+      <div class="mb-3">
+        <input
+          type="email"
+          class="form-control"
+          placeholder="email"
+          id="email-new"
+        />
+      </div>
+      <div class="mb-3">
+        <input
+          type="password"
+          class="form-control"
+          placeholder="pw"
+          id="pw-new"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary" id="register">
+        가입하기
+      </button>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
+
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyDZOwgMxWu87by_E-2NWqWtcrNpQxAhT8o",
+        authDomain: "mboard-49849.firebaseapp.com",
+        projectId: "mboard-49849",
+        storageBucket: "mboard-49849.appspot.com",
+        messagingSenderId: "14676285341",
+        appId: "1:14676285341:web:e4bb749720befaa6a20174",
+        measurementId: "G-8WCMSZ3SRV",
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
+    <script>
+      const db = firebase.firestore();
+      const storage = firebase.storage();
+    </script>
+  </body>
+</html>
