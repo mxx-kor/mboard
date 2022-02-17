@@ -7,26 +7,28 @@
     <title>Mboard</title>
   </head>
   <body>
-    <div class="flex flex-col mt-2 justify-center">
+    <div class="md:container md:mx-auto text-center mt-10">
       <input
         type="text"
-        class="form-control border-solid border-2 border-indigo-600 w-6/12"
+        class="form-control border-solid border-2 border-indigo-600 w-6/12 rounded-md"
         id="title"
         placeholder="title"
       />
       <textarea
-        class="form-control w-6/12 border-solid border-2 border-indigo-600 mt-2"
+        class="form-control w-6/12 border-solid border-2 border-indigo-600 mt-2 rounded-md"
         id="content"
       >
       </textarea>
       <input class="form-control w-6/12 mt-2" type="file" id="image" />
-      <button
-        class="btn bg-teal-400 border-solid border-2 border-indigo-600 w-6/12 mt-2"
-        id="send"
-        onclick="inputValue()"
-      >
-        올리기
-      </button>
+      <div class="px-4 py-3 bg-gray-50 text-center sm:px-6">
+        <button
+          type="submit"
+          class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          onclick="inputValue()"
+        >
+          Save
+        </button>
+      </div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
@@ -52,28 +54,63 @@
       const db = firebase.firestore();
       const storage = firebase.storage();
       function inputValue() {
-        let file = document.getElementById("image").files[0];
-        let storageRef = storage.ref();
-        let imagePath = storageRef.child("image/" + file.name);
-        let uploadImg = imagePath.put(file);
+        if (document.getElementById("image").value == "") {
+          let objects = {
+            title: document.getElementById("title").value,
+            contents: document.getElementById("content").value,
+            name: "username",
+            role: "userrole",
+            date: new Date(),
+          };
+          db.collection("Board")
+            .add(objects)
+            .then(() => {
+              alert("업로드 성공");
+              window.location.href = "./index.html";
+            })
+            .catch((err) => {
+              console.log(err);
+              alert("업로드 실패, 올리기 버튼을 다시 눌러주세요.");
+            });
+        } else {
+          let file = document.getElementById("image").files[0];
+          let storageRef = storage.ref();
+          let imagePath = storageRef.child("image/" + file.name);
+          let uploadImg = imagePath.put(file);
 
-        let objects = {
-          title: document.getElementById("title").value,
-          contents: document.getElementById("content").value,
-          name: "username",
-          role: "userrole",
-          date: new Date(),
-        };
-        db.collection("Board")
-          .add(objects)
-          .then(() => {
-            alert("업로드 성공");
-            window.location.href = "./index.html";
-          })
-          .catch((err) => {
-            console.log(err);
-            alert("업로드 실패, 올리기 버튼을 다시 눌러주세요.");
-          });
+          uploadImg.on(
+            "state_changed",
+            // 변화시 동작하는 함수
+            null,
+            //에러시 동작하는 함수
+            (error) => {
+              console.error("실패사유는", error);
+            },
+            // 성공시 동작하는 함수
+            () => {
+              uploadImg.snapshot.ref.getDownloadURL().then((url) => {
+                let objects = {
+                  title: document.getElementById("title").value,
+                  contents: document.getElementById("content").value,
+                  name: "username",
+                  role: "userrole",
+                  date: new Date(),
+                  img: url,
+                };
+                db.collection("Board")
+                  .add(objects)
+                  .then(() => {
+                    alert("업로드 성공");
+                    window.location.href = "./index.html";
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                    alert("업로드 실패, 올리기 버튼을 다시 눌러주세요.");
+                  });
+              });
+            }
+          );
+        }
       }
     </script>
   </body>
