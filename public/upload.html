@@ -4,7 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Document</title>
+    <title>Mboard</title>
   </head>
   <body>
     <div class="flex flex-col mt-2 justify-center">
@@ -47,15 +47,33 @@
 
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
+    </script>
+    <script>
       const db = firebase.firestore();
+      const storage = firebase.storage();
       function inputValue() {
-        db.collection("Board").add({
+        let file = document.getElementById("image").files[0];
+        let storageRef = storage.ref();
+        let imagePath = storageRef.child("image/" + file.name);
+        let uploadImg = imagePath.put(file);
+
+        let objects = {
           title: document.getElementById("title").value,
           contents: document.getElementById("content").value,
           name: "username",
           role: "userrole",
           date: new Date(),
-        });
+        };
+        db.collection("Board")
+          .add(objects)
+          .then(() => {
+            alert("업로드 성공");
+            window.location.href = "./index.html";
+          })
+          .catch((err) => {
+            console.log(err);
+            alert("업로드 실패, 올리기 버튼을 다시 눌러주세요.");
+          });
       }
     </script>
   </body>
