@@ -117,7 +117,9 @@
             </button>
             <button
               type="submit"
-              class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-700 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-700 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+              id="delete-btn"
+              onclick="deleteClick(this.id)"
             >
               delete
             </button>
@@ -245,7 +247,9 @@
       const editModal = document.getElementById("edit-modal");
       const editTitle = document.getElementById("title");
       const editContents = document.getElementById("content");
+      const deleteBtn = document.getElementById("delete-btn");
       function editClick(a) {
+        deleteBtn.id = a;
         let docRef = firebase.firestore().collection("Board").doc(`${a}`);
         editModal.className = "visible container flex justify-center mx-auto";
         docRef
@@ -262,6 +266,20 @@
         editModal.className = "hidden container flex justify-center mx-auto";
         editTitle.value = "";
         editContents.value = "";
+      }
+      function deleteClick(a) {
+        firebase
+          .firestore()
+          .collection("Board")
+          .doc(`${a}`)
+          .delete()
+          .then(() => {
+            alert("Document successfully deleted!");
+            window.location.href = "./index.html";
+          })
+          .catch((error) => {
+            alert("Error removing document: ", error);
+          });
       }
     </script>
   </body>
