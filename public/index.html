@@ -112,6 +112,8 @@
             <button
               type="submit"
               class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              id="edit-btn"
+              onclick="rewrite(this.id)"
             >
               edit
             </button>
@@ -248,8 +250,10 @@
       const editTitle = document.getElementById("title");
       const editContents = document.getElementById("content");
       const deleteBtn = document.getElementById("delete-btn");
+      const editBtn = document.getElementById("edit-btn");
       function editClick(a) {
         deleteBtn.id = a;
+        editBtn.id = a;
         let docRef = firebase.firestore().collection("Board").doc(`${a}`);
         editModal.className = "visible container flex justify-center mx-auto";
         docRef
@@ -268,17 +272,51 @@
         editContents.value = "";
       }
       function deleteClick(a) {
-        firebase
-          .firestore()
-          .collection("Board")
-          .doc(`${a}`)
-          .delete()
+        let docRef = firebase.firestore().collection("Board").doc(`${a}`);
+        let storage = firebase.storage();
+        // delete firestore
+        docRef
+          .get()
+          .then((doc) => {
+            let httpsReference = storage.refFromURL(`${doc.data().img}`);
+            let desertRef = storage
+              .ref()
+              .child(`${httpsReference._delegate._location.path_}`);
+            desertRef
+              .delete()
+              .then(() => {
+                alert("이미지 지워짐");
+                docRef
+                  .delete()
+                  .then(() => {
+                    alert("Document successfully deleted!");
+                    window.location.href = "./index.html";
+                  })
+                  .catch((error) => {
+                    alert("Error removing document: ", error);
+                  });
+              })
+              .catch((error) => {
+                alert("이미지 지우다 오류!");
+              });
+          })
+          .catch((error) => {
+            alert("Error getting document:", error);
+          });
+      }
+      function rewrite(a) {
+        let rewriteDoc = firebase.firestore().collection("Board").doc(`${a}`);
+        rewriteDoc
+          .update({
+            title: document.getElementById("title").value,
+            contents: document.getElementById("content").value,
+          })
           .then(() => {
-            alert("Document successfully deleted!");
+            console.log("Document successfully written!");
             window.location.href = "./index.html";
           })
           .catch((error) => {
-            alert("Error removing document: ", error);
+            console.error("Error writing document: ", error);
           });
       }
     </script>
