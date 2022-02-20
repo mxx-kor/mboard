@@ -71,6 +71,44 @@
       </div>
     </div>
 
+    <div class="bg-gray-50 visible container" id="main-modal">
+      <div
+        class="absolute inset-0 flex items-center justify-center bg-gray-700 bg-opacity-50"
+      >
+        <div
+          class="bg-white rounded-md max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between"
+        >
+          <h2
+            class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl"
+          >
+            <span class="block" id="main-title">Title : 블라블라</span>
+            <span class="mt-2 block text-indigo-600 text-2xl" id="main-content"
+              >Contents : 블라블라</span
+            >
+          </h2>
+          <div class="mt-8 flex lg:mt-0 lg:flex-shrink-0">
+            <div class="inline-flex rounded-md shadow">
+              <a
+                href="#"
+                class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+              >
+                댓글 쓰기
+              </a>
+            </div>
+            <div class="ml-3 inline-flex rounded-md shadow">
+              <a
+                onclick="mainXClick()"
+                class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50"
+              >
+                닫기
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- edit modal begin -->
     <div class="hidden container flex justify-center mx-auto" id="edit-modal">
       <div
         class="absolute inset-0 flex items-center justify-center bg-gray-700 bg-opacity-50"
@@ -129,6 +167,7 @@
         </div>
       </div>
     </div>
+    <!-- edit modal end -->
 
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
@@ -178,7 +217,9 @@
                     </div>
                   </div>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap">
+                <td class="px-6 py-4 whitespace-nowrap" id="${
+                  doc.id
+                }" onclick="mainclick(this.id)" style="cursor: pointer">
                   <div class="text-sm text-gray-900">${doc.data().title}</div>
                   <div class="text-sm text-gray-500">no image</div>
                 </td>
@@ -220,7 +261,9 @@
                     </div>
                   </div>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap">
+                <td class="px-6 py-4 whitespace-nowrap" id="${
+                  doc.id
+                }" onclick="mainclick(this.id)" style="cursor: pointer">
                   <div class="text-sm text-gray-900">${doc.data().title}</div>
                   <div class="text-sm text-gray-500">there's img</div>
                 </td>
@@ -385,6 +428,32 @@
             }
           );
         }
+      }
+    </script>
+    <script>
+      const mainModal = document.getElementById("main-modal");
+      const mainTitle = document.getElementById("main-title");
+      const mainContent = document.getElementById("main-content");
+      function mainclick(a) {
+        firebase
+          .firestore()
+          .collection("Board")
+          .doc(`${a}`)
+          .get()
+          .then((doc) => {
+            mainModal.className = "bg-gray-50 visible container";
+            mainTitle.innerText = `Title : ${doc.data().title}`;
+            mainContent.innerText = `Contents : ${doc.data().contents}`;
+          })
+          .catch((error) => {
+            mainModal.className = "bg-gray-50 visible container";
+            mainTitle.innerText = `에러 발생 : ${error}`;
+          });
+      }
+      function mainXClick() {
+        mainModal.className = "bg-gray-50 hidden container";
+        mainTitle.innerText = ``;
+        mainContent.innerText = ``;
       }
     </script>
   </body>
