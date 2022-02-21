@@ -408,6 +408,14 @@
     <script>
       const db = firebase.firestore();
       db.collection("Board")
+        .doc("7dJ65m3noQoRJrCMsyQE")
+        .collection("coments")
+        .doc("oo4fvR1gFEHjrgR8iKQM")
+        .get()
+        .then((mindoc) => {
+          console.log(mindoc.data().name);
+        });
+      db.collection("Board")
         .get()
         .then((items) => {
           items.forEach((doc) => {
