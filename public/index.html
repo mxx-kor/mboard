@@ -659,7 +659,9 @@
               document.getElementById("no-comments").className =
                 "flex hidden justify-center border-t border-b py-1";
               commentsTemplate.innerHTML = `
-              <div class="flex w-full items-center border-t border-b py-1">
+              <div class="flex w-full items-center border-t border-b py-1" id='${
+                mindoc.id
+              }'>
                 <div class="-space-x-2 mr-2">
                   <img
                     class="inline-block h-6 w-6 rounded-full ring-2 ring-white"
@@ -773,7 +775,9 @@
             document.getElementById("no-comments").className =
               "flex hidden justify-center border-t border-b py-1";
             commentsTemplate.innerHTML = `
-              <div class="flex w-full items-center border-t border-b py-1">
+              <div class="flex w-full items-center border-t border-b py-1" id="${
+                doc.id
+              }">
                 <div class="-space-x-2 mr-2">
                   <img
                     class="inline-block h-6 w-6 rounded-full ring-2 ring-white"
@@ -824,7 +828,11 @@
           .delete()
           .then(() => {
             alert("댓글 삭제됨");
-            window.location.reload();
+            document.getElementById(`${a}`).className =
+              "flex w-full items-center justify-center border-t border-b py-1";
+            document.getElementById(
+              `${a}`
+            ).innerHTML = `<span>댓글이 삭제되었습니다.</span>`;
           });
       }
     </script>
