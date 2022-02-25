@@ -11,7 +11,7 @@
       <div class="mb-5 pt-2 text-center">
         <input
           type="text"
-          class="border-2 pl-2"
+          class="border-2 pl-2 w-3/4 rounded-md"
           placeholder="write nickname"
           id="nickname-new"
         />
@@ -19,7 +19,7 @@
       <div class="mb-5 text-center">
         <input
           type="email"
-          class="border-2 pl-2"
+          class="border-2 pl-2 w-3/4 rounded-md"
           placeholder="write email"
           id="email-new"
         />
@@ -27,7 +27,7 @@
       <div class="mb-5 text-center">
         <input
           type="password"
-          class="border-2 pl-2"
+          class="border-2 pl-2 w-3/4 rounded-md"
           placeholder="write password"
           id="pw-new"
         />
@@ -91,7 +91,7 @@
               });
           })
           .catch((error) => {
-            console.log(error, "오류 발생 다시 한번 시도해주세요");
+            alert(error.message + "오류 발생");
           });
       }
     </script>
