@@ -6,35 +6,47 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Mboard</title>
   </head>
-  <body>
-    <div class="container mt-3">
-      <div class="mb-3">
+  <body class="flex w-full h-full items-center justify-center">
+    <div class="container w-1/4 mt-10 shadow-lg rounded-md">
+      <div class="mb-5 pt-2 text-center">
         <input
           type="text"
-          class="form-control"
-          placeholder="name"
-          id="name-new"
+          class="border-2 pl-2"
+          placeholder="write nickname"
+          id="nickname-new"
         />
       </div>
-      <div class="mb-3">
+      <div class="mb-5 text-center">
         <input
           type="email"
-          class="form-control"
-          placeholder="email"
+          class="border-2 pl-2"
+          placeholder="write email"
           id="email-new"
         />
       </div>
-      <div class="mb-3">
+      <div class="mb-5 text-center">
         <input
           type="password"
-          class="form-control"
-          placeholder="pw"
+          class="border-2 pl-2"
+          placeholder="write password"
           id="pw-new"
         />
       </div>
-      <button type="submit" class="btn btn-primary" id="register">
-        가입하기
-      </button>
+      <div class="mb-5 text-center">
+        <span class="font-light text-sm"
+          >비밀번호는 6글자 이상이여야 합니다.</span
+        >
+      </div>
+      <div class="mb-5 text-center">
+        <button
+          type="submit"
+          class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          id="register"
+          onclick="clickSignUp()"
+        >
+          가입하기
+        </button>
+      </div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
@@ -59,6 +71,29 @@
     <script>
       const db = firebase.firestore();
       const storage = firebase.storage();
+      function clickSignUp() {
+        let wrotenNickname = document.getElementById("nickname-new").value;
+        let email = document.getElementById("email-new").value;
+        let password = document.getElementById("pw-new").value;
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(email, password)
+          .then((result) => {
+            db.collection("Users")
+              .doc(`${result.user.uid}`)
+              .set({
+                nickname: `${wrotenNickname}`,
+                role: "user",
+              })
+              .then(() => {
+                alert("가입되었습니다. 로그인 후 이용해주세요.");
+                window.location.href = "./index.html";
+              });
+          })
+          .catch((error) => {
+            console.log(error, "오류 발생 다시 한번 시도해주세요");
+          });
+      }
     </script>
   </body>
 </html>
