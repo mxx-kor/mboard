@@ -8,15 +8,8 @@
   </head>
   <body class="flex w-full h-full items-center justify-center">
     <div class="container w-1/4 mt-10 shadow-lg rounded-md">
-      <div class="mb-5 pt-2 text-center">
-        <input
-          type="text"
-          class="border-2 pl-2 w-3/4 rounded-md"
-          placeholder="write nickname"
-          id="nickname-new"
-        />
-      </div>
-      <div class="mb-5 text-center">
+      <div class="mb-3 text-center">
+        <p>Email</p>
         <input
           type="email"
           class="border-2 pl-2 w-3/4 rounded-md"
@@ -25,6 +18,7 @@
         />
       </div>
       <div class="mb-5 text-center">
+        <p>password</p>
         <input
           type="password"
           class="border-2 pl-2 w-3/4 rounded-md"
@@ -32,10 +26,15 @@
           id="pw-new"
         />
       </div>
-      <div class="mb-5 text-center">
+      <div class="text-center">
         <span class="font-light text-sm"
           >비밀번호는 6글자 이상이여야 합니다.</span
         >
+      </div>
+      <div class="mb-5 pt-2 text-center">
+        <span class="font-light text-sm">
+          프로필 변경은 로그인하신 후 설정해주세요.
+        </span>
       </div>
       <div class="mb-5 text-center">
         <button
@@ -72,23 +71,14 @@
       const db = firebase.firestore();
       const storage = firebase.storage();
       function clickSignUp() {
-        let wrotenNickname = document.getElementById("nickname-new").value;
         let email = document.getElementById("email-new").value;
         let password = document.getElementById("pw-new").value;
         firebase
           .auth()
           .createUserWithEmailAndPassword(email, password)
           .then((result) => {
-            db.collection("Users")
-              .doc(`${result.user.uid}`)
-              .set({
-                nickname: `${wrotenNickname}`,
-                role: "user",
-              })
-              .then(() => {
-                alert("가입되었습니다. 로그인 후 이용해주세요.");
-                window.location.href = "./index.html";
-              });
+            alert("가입되었습니다. 로그인 후 이용해주세요.");
+            window.location.href = "./index.html";
           })
           .catch((error) => {
             alert(error.message + "오류 발생");

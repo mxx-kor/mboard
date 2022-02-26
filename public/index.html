@@ -10,7 +10,7 @@
     <div>
       <div class="px-4 py-3 bg-gray-50 flex justify-around sm:px-6">
         <h2 class="text-4xl font-extrabold tracking-tight">Mboard</h2>
-        <div>
+        <div id="nav-bar-info">
           <a
             href="./upload.html"
             class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -19,6 +19,7 @@
           </a>
           <a
             href="./login.html"
+            id="loggingin"
             class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
           >
             로그인
@@ -28,6 +29,14 @@
             class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             회원가입
+          </a>
+          <a
+            href="./signup.html"
+            class="hidden"
+            id="log-out"
+            onclick="logOut()"
+          >
+            로그아웃
           </a>
         </div>
       </div>
@@ -840,6 +849,31 @@
             document.getElementById(
               `${a}`
             ).innerHTML = `<span>댓글이 삭제되었습니다.</span>`;
+          });
+      }
+    </script>
+    <script>
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          document.getElementById("loggingin").className = "hidden";
+          document.getElementById("log-out").className =
+            "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500";
+        } else {
+          document.getElementById("loggingin").className =
+            "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500";
+          document.getElementById("log-out").className = "hidden";
+        }
+      });
+      function logOut() {
+        firebase
+          .auth()
+          .signOut()
+          .then(() => {
+            alert("로그아웃되었습니다.");
+            window.location.reload();
+          })
+          .catch((error) => {
+            alert(error.message);
           });
       }
     </script>
