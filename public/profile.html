@@ -62,7 +62,7 @@
       </div>
     </div>
     <div class="flex w-full h-96 items-center justify-center">
-      <div class="container min-w-fit w-1/4 shadow-lg rounded-md mt-10">
+      <div class="container min-w-fit w-1/4 shadow-lg rounded-md mt-20">
         <h2 class="font-extrabold text-xl text-center mb-3">프로필 설정</h2>
         <img
           class="block mx-auto w-40 h-40 rounded-full my-2"
@@ -79,12 +79,20 @@
             id="nick-fix"
           />
         </div>
-        <input class="form-control ml-11 my-2" type="file" id="image" />
+        <div class="mb-3 text-center">
+          <p>Profile Photo</p>
+          <input
+            class="form-control ml-10"
+            type="file"
+            id="profile-photo-fix"
+          />
+        </div>
         <div class="mb-5 text-center">
           <button
             type="submit"
             class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            onclick=""
+            onclick="editProfile(this.id)"
+            id="fix-btn"
           >
             수정하기
           </button>
@@ -125,6 +133,7 @@
             .doc(`${user.email}`)
             .get()
             .then((info) => {
+              document.getElementById("fix-btn").id = `${user.email}`;
               document.getElementById("profile-role").innerText =
                 info.data().role;
               document.getElementById("profile-nick").innerText =
@@ -161,6 +170,109 @@
       // 프로필 클릭
       function profileClick() {
         window.location.href = "./profile.html";
+      }
+    </script>
+    <script>
+      //프로필 수정
+      let profilePhotoFix = document.getElementById("profile-photo-fix");
+      function editProfile(userEmail) {
+        let userRef = db.collection("Users").doc(`${userEmail}`);
+        // 업로드된 사진 없을때
+        if (profilePhotoFix.value == "") {
+          userRef
+            .update({
+              nickname: document.getElementById("nick-fix").value,
+            })
+            .then(() => {
+              alert("프로필이 수정되었습니다.");
+              window.location.href = "./index.html";
+            })
+            .catch((error) => {
+              alert("Error writing document: " + error);
+            });
+        } else {
+          let file = profilePhotoFix.files[0];
+          let storageRef = storage.ref();
+          let imagePath = storageRef.child("profilePhoto/" + file.name);
+          let uploadImg = imagePath.put(file);
+
+          if (
+            document.getElementById("profile-img-OG").src ==
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAM1BMVEXk5ueutLfn6eqrsbTp6+zg4uOwtrnJzc/j5earsbW0uby4vcDQ09XGyszU19jd3+G/xMamCvwDAAAFLklEQVR4nO2d2bLbIAxAbYE3sDH//7WFbPfexG4MiCAcnWmnrzkjIRaD2jQMwzAMwzAMwzAMwzAMwzAMwzAMwzAMwzAMwzAMw5wQkHJczewxZh2lhNK/CBOQo1n0JIT74/H/qMV0Z7GU3aCcVPuEE1XDCtVLAhgtpme7H0s1N1U7QjO0L8F7llzGeh1hEG/8Lo7TUmmuSrOfns9xnGXpXxsONPpA/B6OqqstjC6Ax/0ujkNdYQQbKNi2k64qiiEZ+ohi35X+2YcZw/WujmslYewiAliVYrxgJYrdwUmwXsU+RdApUi83oNIE27YvrfB/ZPg8+BJETXnqh9CVzBbTQHgojgiCvtqU9thFJg/CKz3VIMKMEkIXxIWqIpIg2SkjYj+xC816mrJae2aiWGykxRNsW0UwiJghJDljYI5CD8GRiCtIsJxizYUPQ2pzItZy5pcisTRdk/a9m4amtNNfBuQkdVhSaYqfpNTSFGfb9GRIakrE2Pm+GFLaCQPqiu0OpWP+HMPQQcgQMiQprWXNmsVwIjQjYi/ZrhAqNTCgr2gu0Jnz85RSSjso0HkMFZ0YZjKkc26a/jlmh9JiDyDxi9oeorTYAzZkwwoMz19pzj9bnH/GP/+qbchjSGflneWYhtTuKdMOmNKZcJ5TjInQKcYXnESd/jQxy0ENpULTNGOGgxpap/oyw9pbUAqhfx2Dbkhovvfgz4iUzoM9+GlK6/Mh4q29hyC1mwro30hpVVLPF9wYQr71RazOeM5/cw81iBRD+A03aM9/C/obbrKjbYSpCmIVG3qT/Q8oeUo3Rz0IL7vI1tEbCB9pSiu8I/aV8x3Kg/BGWrWp4ZVs0nZfmAoEG4h/61yHYIJiFSl6Q0Vk6tTW1N8kYp8hdOkfHYYMXd2Qft+8CYwqYDSKvqIh+MCF8Wgca2u/cwdgeW3TtuVn6+1oBs3yLo5C2JpK6CvQzGpfUkz9UG/87gCsi5o2LIXolxN0FbwAsjOLEr+YJmXn7iR6N0BCt5p5cMxm7eAsfS+/CACQf4CTpKjzgkvr2cVarVTf96372yut7XLJ1sa7lv6VcfgYrWaxqr3Wlo1S6pvStr22sxOtTNPLzdY3nj20bPP+ejFdJYkLsjGLdtPBEbe/mr2bQKiXWJDroA+vtzc0p9aahuwqHMDYrQEXHEw9jwQl3drMpts9JBU1SdktPe5FBRdJQ6bwXBpa57ib2A8kukQDzMjh++Uo7Fo6Wd02Pkf4fknqoo4HtvAIjsqUcjx6DIPgWCaOML9rKI/oqD9/lgNrn+eF+p7j8tnzHBiR7+kdUGw/+V1Kzkc75mMy6U+FMaxjPibiM1U1uGM+puInHpmALZCgP4pt7i840MV8+0R1zPsRB6UTcqpizncYwZ89syDydfyWCwXB1l8/zRNGWbTG/GHKUm9AkxHMc/EGSk3z2+ArEhPEV5TUBLEvUGFcjEUH80J/jveTGOAJEljJbILWGQT3zRYiwuKsUXN1EEJAzBhRJFll7mBUG7KD8EqPkKekBREaL8hMDZLQSG6AQjtHPYmvTQnX0TtpC1SYCe2YdkkyLP3jj5BSbKiuR585eQhTgoje6yIb0Yb0C+mV6EYvebqw5SDy2WmubogZiF2AVxPC2FpDf8H2Q9QWo6IkjUxTWVEI3WY/wrCeSuqJ+eRWzXR/JXwgVjUMozbCOfoEZiSiKVGepqv5CJ8RyR4D7xBeamqa7z3BJ/z17JxuBPdv93d/a2Ki878MMAzDMAzDMAzDMAzDMF/KP09VUmxBAiI3AAAAAElFTkSuQmCC"
+          ) {
+            uploadImg.on(
+              "state_changed",
+              // 변화시 동작하는 함수
+              null,
+              //에러시 동작하는 함수
+              (error) => {
+                console.error("실패사유는", error);
+              },
+              // 성공시 동작하는 함수
+              () => {
+                uploadImg.snapshot.ref.getDownloadURL().then((url) => {
+                  userRef
+                    .update({
+                      nickname: document.getElementById("nick-fix").value,
+                      photoURL: url,
+                    })
+                    .then(() => {
+                      alert("프로필이 수정되었습니다.");
+                      window.location.href = "./index.html";
+                    })
+                    .catch((error) => {
+                      alert("Error writing document: " + error);
+                    });
+                });
+              }
+            );
+          } else {
+            //일단 이미지 지우고
+            userRef.get().then((doc) => {
+              let httpsReference = storage.refFromURL(`${doc.data().photoURL}`);
+              let desertRef = storage
+                .ref()
+                .child(`${httpsReference._delegate._location.path_}`);
+              desertRef
+                .delete()
+                .then(() => {
+                  alert("the og img successfully deleted");
+                })
+                .catch((error) => {
+                  alert("이미지 바꾸다가 오류!");
+                });
+            });
+            //다시 이미지 넣자
+
+            uploadImg.on(
+              "state_changed",
+              // 변화시 동작하는 함수
+              null,
+              //에러시 동작하는 함수
+              (error) => {
+                console.error("실패사유는", error);
+              },
+              // 성공시 동작하는 함수
+              () => {
+                uploadImg.snapshot.ref.getDownloadURL().then((url) => {
+                  userRef
+                    .update({
+                      nickname: document.getElementById("nick-fix").value,
+                      photoURL: url,
+                    })
+                    .then(() => {
+                      alert("프로필 수정 성공");
+                      window.location.href = "./index.html";
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                      alert("수정 실패, 수정 버튼을 다시 눌러주세요.");
+                    });
+                });
+              }
+            );
+          }
+        }
       }
     </script>
   </body>
