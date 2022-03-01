@@ -56,63 +56,83 @@
       const db = firebase.firestore();
       const storage = firebase.storage();
       function inputValue() {
-        if (document.getElementById("image").value == "") {
-          let objects = {
-            title: document.getElementById("title").value,
-            contents: document.getElementById("content").value,
-            name: "username",
-            role: "userrole",
-            date: new Date(),
-          };
-          db.collection("Board")
-            .add(objects)
-            .then(() => {
-              alert("업로드 성공");
-              window.location.href = "./index.html";
-            })
-            .catch((err) => {
-              console.log(err);
-              alert("업로드 실패, 올리기 버튼을 다시 눌러주세요.");
-            });
-        } else {
-          let file = document.getElementById("image").files[0];
-          let storageRef = storage.ref();
-          let imagePath = storageRef.child("image/" + file.name);
-          let uploadImg = imagePath.put(file);
+        firebase.auth().onAuthStateChanged((user) => {
+          if (user) {
+            if (document.getElementById("image").value == "") {
+              db.collection("Users")
+                .doc(`${user.email}`)
+                .get()
+                .then((currentUser) => {
+                  let objects = {
+                    title: document.getElementById("title").value,
+                    contents: document.getElementById("content").value,
+                    imgURL: `${currentUser.data().photoURL}`,
+                    name: `${currentUser.data().nickname}`,
+                    role: `${currentUser.data().role}`,
+                    date: new Date(),
+                  };
+                  db.collection("Board")
+                    .add(objects)
+                    .then(() => {
+                      alert("업로드 성공");
+                      window.location.href = "./index.html";
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                      alert("업로드 실패, 올리기 버튼을 다시 눌러주세요.");
+                    });
+                });
+            } else {
+              let file = document.getElementById("image").files[0];
+              let storageRef = storage.ref();
+              let imagePath = storageRef.child("image/" + file.name);
+              let uploadImg = imagePath.put(file);
 
-          uploadImg.on(
-            "state_changed",
-            // 변화시 동작하는 함수
-            null,
-            //에러시 동작하는 함수
-            (error) => {
-              console.error("실패사유는", error);
-            },
-            // 성공시 동작하는 함수
-            () => {
-              uploadImg.snapshot.ref.getDownloadURL().then((url) => {
-                let objects = {
-                  title: document.getElementById("title").value,
-                  contents: document.getElementById("content").value,
-                  name: "username",
-                  role: "userrole",
-                  date: new Date(),
-                  img: url,
-                };
-                db.collection("Board")
-                  .add(objects)
-                  .then(() => {
-                    alert("업로드 성공");
-                    window.location.href = "./index.html";
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                    alert("업로드 실패, 올리기 버튼을 다시 눌러주세요.");
+              uploadImg.on(
+                "state_changed",
+                // 변화시 동작하는 함수
+                null,
+                //에러시 동작하는 함수
+                (error) => {
+                  console.error("실패사유는", error);
+                },
+                // 성공시 동작하는 함수
+                () => {
+                  uploadImg.snapshot.ref.getDownloadURL().then((url) => {
+                    db.collection("Users")
+                      .doc(`${user.email}`)
+                      .get()
+                      .then((currentUser) => {
+                        let objects = {
+                          title: document.getElementById("title").value,
+                          contents: document.getElementById("content").value,
+                          imgURL: `${currentUser.data().photoURL}`,
+                          name: `${currentUser.data().nickname}`,
+                          role: `${currentUser.data().role}`,
+                          date: new Date(),
+                          img: url,
+                        };
+                        db.collection("Board")
+                          .add(objects)
+                          .then(() => {
+                            alert("업로드 성공");
+                            window.location.href = "./index.html";
+                          })
+                          .catch((err) => {
+                            console.log(err);
+                            alert(
+                              "업로드 실패, 올리기 버튼을 다시 눌러주세요."
+                            );
+                          });
+                      });
                   });
-              });
+                }
+              );
             }
-          );
-        }
+          } else {
+            alert("회원 정보를 불러올수 없습니다.");
+          }
+        });
       }
     </script>
   </body>
