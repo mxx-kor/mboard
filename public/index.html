@@ -119,21 +119,59 @@
             to
             <span class="font-medium" id="end-num">10</span>
             of
-            <span class="font-medium" id="total-num"></span>
+            <span class="font-medium" id="total-num">10</span>
             results
           </p>
         </div>
+        <a
+          style="cursor: pointer"
+          class="inline-flex items-center py-2 px-2 text-sm font-medium text-gray-500 bg-white rounded-lg border border-indigo-300 hover:bg-indigo-100 hover:text-gray-700 dark:bg-indigo-800 dark:border-indigo-700 dark:text-gray-400 dark:hover:bg-indigo-700 dark:hover:text-white ml-2"
+          onclick="morePage()"
+        >
+          모든 글 보기
+        </a>
         <div>
           <nav
-            class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+            class="relative z-0 inline-flex justify-between rounded-md shadow-sm -space-x-px"
             aria-label="Pagination"
           >
             <a
               style="cursor: pointer"
-              class="inline-flex justify-center items-center py-2 px-4 mr-3 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-              onclick="morePage()"
+              class="inline-flex items-center py-2 px-4 mr-3 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              onclick="previousPage()"
             >
-              모든 글 보기
+              <svg
+                class="mr-2 w-5 h-5"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              Previous
+            </a>
+            <a
+              style="cursor: pointer"
+              class="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              onclick="nextPage()"
+            >
+              Next
+              <svg
+                class="ml-2 w-5 h-5"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
             </a>
           </nav>
         </div>
@@ -321,27 +359,39 @@
       const db = firebase.firestore();
       const noPhoto =
         "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAM1BMVEXk5ueutLfn6eqrsbTp6+zg4uOwtrnJzc/j5earsbW0uby4vcDQ09XGyszU19jd3+G/xMamCvwDAAAFLklEQVR4nO2d2bLbIAxAbYE3sDH//7WFbPfexG4MiCAcnWmnrzkjIRaD2jQMwzAMwzAMwzAMwzAMwzAMwzAMwzAMwzAMwzAMw5wQkHJczewxZh2lhNK/CBOQo1n0JIT74/H/qMV0Z7GU3aCcVPuEE1XDCtVLAhgtpme7H0s1N1U7QjO0L8F7llzGeh1hEG/8Lo7TUmmuSrOfns9xnGXpXxsONPpA/B6OqqstjC6Ax/0ujkNdYQQbKNi2k64qiiEZ+ohi35X+2YcZw/WujmslYewiAliVYrxgJYrdwUmwXsU+RdApUi83oNIE27YvrfB/ZPg8+BJETXnqh9CVzBbTQHgojgiCvtqU9thFJg/CKz3VIMKMEkIXxIWqIpIg2SkjYj+xC816mrJae2aiWGykxRNsW0UwiJghJDljYI5CD8GRiCtIsJxizYUPQ2pzItZy5pcisTRdk/a9m4amtNNfBuQkdVhSaYqfpNTSFGfb9GRIakrE2Pm+GFLaCQPqiu0OpWP+HMPQQcgQMiQprWXNmsVwIjQjYi/ZrhAqNTCgr2gu0Jnz85RSSjso0HkMFZ0YZjKkc26a/jlmh9JiDyDxi9oeorTYAzZkwwoMz19pzj9bnH/GP/+qbchjSGflneWYhtTuKdMOmNKZcJ5TjInQKcYXnESd/jQxy0ENpULTNGOGgxpap/oyw9pbUAqhfx2Dbkhovvfgz4iUzoM9+GlK6/Mh4q29hyC1mwro30hpVVLPF9wYQr71RazOeM5/cw81iBRD+A03aM9/C/obbrKjbYSpCmIVG3qT/Q8oeUo3Rz0IL7vI1tEbCB9pSiu8I/aV8x3Kg/BGWrWp4ZVs0nZfmAoEG4h/61yHYIJiFSl6Q0Vk6tTW1N8kYp8hdOkfHYYMXd2Qft+8CYwqYDSKvqIh+MCF8Wgca2u/cwdgeW3TtuVn6+1oBs3yLo5C2JpK6CvQzGpfUkz9UG/87gCsi5o2LIXolxN0FbwAsjOLEr+YJmXn7iR6N0BCt5p5cMxm7eAsfS+/CACQf4CTpKjzgkvr2cVarVTf96372yut7XLJ1sa7lv6VcfgYrWaxqr3Wlo1S6pvStr22sxOtTNPLzdY3nj20bPP+ejFdJYkLsjGLdtPBEbe/mr2bQKiXWJDroA+vtzc0p9aahuwqHMDYrQEXHEw9jwQl3drMpts9JBU1SdktPe5FBRdJQ6bwXBpa57ib2A8kukQDzMjh++Uo7Fo6Wd02Pkf4fknqoo4HtvAIjsqUcjx6DIPgWCaOML9rKI/oqD9/lgNrn+eF+p7j8tnzHBiR7+kdUGw/+V1Kzkc75mMy6U+FMaxjPibiM1U1uGM+puInHpmALZCgP4pt7i840MV8+0R1zPsRB6UTcqpizncYwZ89syDydfyWCwXB1l8/zRNGWbTG/GHKUm9AkxHMc/EGSk3z2+ArEhPEV5TUBLEvUGFcjEUH80J/jveTGOAJEljJbILWGQT3zRYiwuKsUXN1EEJAzBhRJFll7mBUG7KD8EqPkKekBREaL8hMDZLQSG6AQjtHPYmvTQnX0TtpC1SYCe2YdkkyLP3jj5BSbKiuR585eQhTgoje6yIb0Yb0C+mV6EYvebqw5SDy2WmubogZiF2AVxPC2FpDf8H2Q9QWo6IkjUxTWVEI3WY/wrCeSuqJ+eRWzXR/JXwgVjUMozbCOfoEZiSiKVGepqv5CJ8RyR4D7xBeamqa7z3BJ/z17JxuBPdv93d/a2Ki878MMAzDMAzDMAzDMAzDMF/KP09VUmxBAiI3AAAAAElFTkSuQmCC";
+      const rows = document.getElementById("rows");
       let first = db.collection("Board").orderBy("date", "desc").limit(10);
+      let pages = 0;
+      let currentPage = 1;
+      let lastVisible = "";
+      let firstVisible = "";
+      let totalLength = "";
 
       // get total
       db.collection("Board")
+        .orderBy("date", "desc")
         .get()
         .then((total) => {
-          if (total.docs.length < 10) {
-            document.getElementById("total-num").innerText = total.docs.length;
-            document.getElementById("end-num").innerText = total.docs.length;
+          totalLength = total.docs.length;
+          if (totalLength < 10) {
+            document.getElementById("total-num").innerText = totalLength;
+            document.getElementById("end-num").innerText = totalLength;
+          } else {
+            pages = parseInt(totalLength / 10) + 1;
+            document.getElementById("total-num").innerText = totalLength;
           }
+          // show the lists
+          first.get().then((items) => {
+            // first and last items
+            lastVisible = items.docs[items.docs.length - 1];
+            firstVisible = items.docs[items.docs.length - 1];
+            items.forEach((doc) => {
+              writingRows(doc);
+            });
+          });
         });
-
-      first.get().then((items) => {
-        items.forEach((doc) => {
-          writingRows(doc);
-        });
-      });
-
       // 리스트 만들어주기
       function writingRows(doc) {
-        let rows = document.getElementById("rows");
         let template = document.createElement("tr");
         if (doc.data().img == null) {
           template.innerHTML = `<tr>
@@ -455,29 +505,76 @@
           rows.append(template);
         }
       }
-      // next page
+
+      //all the lists
       function morePage() {
-        first.get().then((documentSnapshots) => {
-          var pageLength = documentSnapshots.docs.length;
+        rows.innerHTML = "";
+        db.collection("Board")
+          .orderBy("date", "desc")
+          .get()
+          .then((allItems) => {
+            allItems.forEach((allDoc) => {
+              writingRows(allDoc);
+              document.getElementById("total-num").innerText = totalLength;
+              document.getElementById("end-num").innerText = totalLength;
+            });
+          });
+      }
+      // next page
+      function nextPage() {
+        if (pages < 1) {
+          // 클릭 안되게
+        } else {
+          if (pages <= currentPage) {
+            alert("마지막 페이지입니다.");
+          } else {
+            currentPage += 1;
+            let next = db
+              .collection("Board")
+              .orderBy("date", "desc")
+              .startAfter(lastVisible)
+              .limit(10);
 
-          var lastVisible =
-            documentSnapshots.docs[documentSnapshots.docs.length - 1];
+            next.get().then((nextItems) => {
+              lastVisible = nextItems.docs[nextItems.docs.length - 1];
+              firstVisible =
+                nextItems.docs[nextItems.docs.length - nextItems.docs.length];
+              rows.innerHTML = "";
+              document.getElementById("end-num").innerText = currentPage * 10;
+              nextItems.forEach((nextDoc) => {
+                writingRows(nextDoc);
+              });
+            });
+          }
+        }
+      }
+      //previous page
+      function previousPage() {
+        if (currentPage == 1) {
+          alert("첫 페이지입니다.");
+        } else {
+          currentPage -= 1;
 
-          let next = db
+          let previous = db
             .collection("Board")
             .orderBy("date", "desc")
-            .startAfter(lastVisible);
+            .endBefore(firstVisible)
+            .limitToLast(10);
 
-          next.get().then((nextItems) => {
-            document.getElementById("end-num").innerText =
-              nextItems.docs.length + pageLength;
-            nextItems.forEach((nextDoc) => {
+          previous.get().then((previousItems) => {
+            lastVisible = previousItems.docs[previousItems.docs.length - 1];
+            firstVisible =
+              previousItems.docs[
+                previousItems.docs.length - previousItems.docs.length
+              ];
+            rows.innerHTML = "";
+            document.getElementById("end-num").innerText = currentPage * 10;
+            previousItems.forEach((nextDoc) => {
               writingRows(nextDoc);
             });
           });
-        });
+        }
       }
-      //previous page
     </script>
     <script>
       const editModal = document.getElementById("edit-modal");
