@@ -114,11 +114,9 @@
       <div class="sm:flex-1 sm:flex sm:items-center sm:justify-between">
         <div>
           <p class="text-sm text-gray-700">
-            Showing
-            <span class="font-medium" id="start-num">1</span>
-            to
-            <span class="font-medium" id="end-num">10</span>
-            of
+            현재 페이지
+            <span class="font-medium" id="page-num">1</span>
+            page of
             <span class="font-medium" id="total-num">10</span>
             results
           </p>
@@ -375,7 +373,6 @@
           totalLength = total.docs.length;
           if (totalLength < 10) {
             document.getElementById("total-num").innerText = totalLength;
-            document.getElementById("end-num").innerText = totalLength;
           } else {
             pages = parseInt(totalLength / 10) + 1;
             document.getElementById("total-num").innerText = totalLength;
@@ -540,7 +537,7 @@
               firstVisible =
                 nextItems.docs[nextItems.docs.length - nextItems.docs.length];
               rows.innerHTML = "";
-              document.getElementById("end-num").innerText = currentPage * 10;
+              document.getElementById("page-num").innerText = currentPage;
               nextItems.forEach((nextDoc) => {
                 writingRows(nextDoc);
               });
@@ -568,7 +565,7 @@
                 previousItems.docs.length - previousItems.docs.length
               ];
             rows.innerHTML = "";
-            document.getElementById("end-num").innerText = currentPage * 10;
+            document.getElementById("page-num").innerText = currentPage;
             previousItems.forEach((nextDoc) => {
               writingRows(nextDoc);
             });
