@@ -454,7 +454,7 @@
         let template = document.createElement("tr");
         if (doc.data().img == null) {
           template.innerHTML = `<tr>
-                <td class="px-6 py-4 whitespace-nowrap">
+                <td class="px-2 py-4 whitespace-nowrap">
                   <div class="flex items-center">
                     <div class="flex-shrink-0 h-10 w-10">
                       <img
@@ -509,7 +509,7 @@
           rows.append(template);
         } else {
           template.innerHTML = `<tr>
-                <td class="px-6 py-4 whitespace-nowrap">
+                <td class="px-2 py-4 whitespace-nowrap">
                   <div class="flex items-center">
                     <div class="flex-shrink-0 h-10 w-10">
                       <img
@@ -858,14 +858,16 @@
               mainModal.className = "bg-gray-50 visible container";
               mainModalAbsoulte.className =
                 "fixed items-center inset-0 flex justify-center bg-gray-700 bg-opacity-50";
-              mainTitle.innerText = `Title : ${doc.data().title}`;
-              mainContent.innerText = `Contents : ${doc.data().contents}`;
+              mainTitle.innerText = `제목 : ${doc.data().title}`;
+              mainContent.innerText = `내용 : 
+              ${doc.data().contents}`;
             } else {
               mainModal.className = "bg-gray-50 visible container";
               mainModalAbsoulte.className =
                 "fixed items-center inset-0 flex justify-center bg-gray-700 bg-opacity-50";
-              mainTitle.innerText = `Title : ${doc.data().title}`;
-              mainContent.innerText = `Contents : ${doc.data().contents}`;
+              mainTitle.innerText = `제목 : ${doc.data().title}`;
+              mainContent.innerText = `내용 : 
+              ${doc.data().contents}`;
               mainImg.setAttribute("src", `${doc.data().img}`);
             }
           })
