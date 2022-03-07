@@ -459,7 +459,7 @@
               .get()
               .then((info) => {
                 if (
-                  doc.data().name == info.data().nickname ||
+                  doc.data().userId == user.email ||
                   info.data().role == "admin"
                 ) {
                   // 이미지가 없을 때
@@ -1045,7 +1045,7 @@
                     .get()
                     .then((info) => {
                       if (
-                        mindoc.data().name == info.data().nickname ||
+                        mindoc.data().userId == user.email ||
                         info.data().role == "admin"
                       ) {
                         let mainComments =
@@ -1278,6 +1278,7 @@
               .then((nowUser) => {
                 if (nowUser.data().photoURL == null) {
                   let objects = {
+                    userId: user.email,
                     name: `${nowUser.data().nickname}`,
                     photo: noPhoto,
                     contents: commentContent.value,
@@ -1336,6 +1337,7 @@
                   commentContent.value = "";
                 } else {
                   let objects = {
+                    userId: user.email,
                     name: `${nowUser.data().nickname}`,
                     photo: `${nowUser.data().photoURL}`,
                     contents: commentContent.value,

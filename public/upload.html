@@ -119,6 +119,7 @@
                 .get()
                 .then((currentUser) => {
                   let objects = {
+                    userId: user.email,
                     title: document.getElementById("title").value,
                     contents: document.getElementById("content").value,
                     imgURL: `${currentUser.data().photoURL}`,
@@ -159,6 +160,7 @@
                       .get()
                       .then((currentUser) => {
                         let objects = {
+                          userId: user.email,
                           title: document.getElementById("title").value,
                           contents: document.getElementById("content").value,
                           imgURL: `${currentUser.data().photoURL}`,
