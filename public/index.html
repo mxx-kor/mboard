@@ -452,8 +452,19 @@
       // 리스트 만들어주기
       function writingRows(doc) {
         let template = document.createElement("tr");
-        if (doc.data().img == null) {
-          template.innerHTML = `<tr>
+        firebase.auth().onAuthStateChanged((user) => {
+          if (user) {
+            db.collection("Users")
+              .doc(`${user.email}`)
+              .get()
+              .then((info) => {
+                if (
+                  doc.data().name == info.data().nickname ||
+                  info.data().role == "admin"
+                ) {
+                  // 이미지가 없을 때
+                  if (doc.data().img == null) {
+                    template.innerHTML = `<tr>
                 <td class="px-2 py-4 whitespace-nowrap">
                   <div class="flex items-center">
                     <div class="flex-shrink-0 h-10 w-10">
@@ -485,14 +496,14 @@
                      .getFullYear()
                      .toString()
                      .slice(-2)}/${
-            doc.data().date.toDate().getMonth() + 1
-          }/${doc.data().date.toDate().getDate()} ${doc
-            .data()
-            .date.toDate()
-            .getHours()}:${doc.data().date.toDate().getMinutes()}:${doc
-            .data()
-            .date.toDate()
-            .getSeconds()}
+                      doc.data().date.toDate().getMonth() + 1
+                    }/${doc.data().date.toDate().getDate()} ${doc
+                      .data()
+                      .date.toDate()
+                      .getHours()}:${doc
+                      .data()
+                      .date.toDate()
+                      .getMinutes()}:${doc.data().date.toDate().getSeconds()}
                 </span>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -506,9 +517,10 @@
                   </a>
                 </td>
               </tr>`;
-          rows.append(template);
-        } else {
-          template.innerHTML = `<tr>
+                    rows.append(template);
+                  } else {
+                    //이미지가 있을때
+                    template.innerHTML = `<tr>
                 <td class="px-2 py-4 whitespace-nowrap">
                   <div class="flex items-center">
                     <div class="flex-shrink-0 h-10 w-10">
@@ -540,14 +552,14 @@
                      .getFullYear()
                      .toString()
                      .slice(-2)}/${
-            doc.data().date.toDate().getMonth() + 1
-          }/${doc.data().date.toDate().getDate()} ${doc
-            .data()
-            .date.toDate()
-            .getHours()}:${doc.data().date.toDate().getMinutes()}:${doc
-            .data()
-            .date.toDate()
-            .getSeconds()}
+                      doc.data().date.toDate().getMonth() + 1
+                    }/${doc.data().date.toDate().getDate()} ${doc
+                      .data()
+                      .date.toDate()
+                      .getHours()}:${doc
+                      .data()
+                      .date.toDate()
+                      .getMinutes()}:${doc.data().date.toDate().getSeconds()}
                 </span>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -561,8 +573,239 @@
                   </a>
                 </td>
               </tr>`;
-          rows.append(template);
-        }
+                    rows.append(template);
+                  }
+                } else {
+                  //이미지가 없을 때
+                  if (doc.data().img == null) {
+                    template.innerHTML = `<tr>
+                <td class="px-2 py-4 whitespace-nowrap">
+                  <div class="flex items-center">
+                    <div class="flex-shrink-0 h-10 w-10">
+                      <img
+                        class="h-10 w-10 rounded-full"
+                        src="${doc.data().imgURL}"
+                        onerror="this.src='${noPhoto}';"
+                        alt=""
+                      />
+                    </div>
+                    <div class="ml-4">
+                      <div class="text-sm font-medium text-gray-900">
+                        ${doc.data().name}
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap" id="${
+                  doc.id
+                }" onclick="mainclick(this.id)" style="cursor: pointer">
+                  <div class="text-sm text-gray-900">${doc.data().title}</div>
+                  <div class="text-sm text-gray-500">no image</div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                   ${doc
+                     .data()
+                     .date.toDate()
+                     .getFullYear()
+                     .toString()
+                     .slice(-2)}/${
+                      doc.data().date.toDate().getMonth() + 1
+                    }/${doc.data().date.toDate().getDate()} ${doc
+                      .data()
+                      .date.toDate()
+                      .getHours()}:${doc
+                      .data()
+                      .date.toDate()
+                      .getMinutes()}:${doc.data().date.toDate().getSeconds()}
+                </span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  ${doc.data().role}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <a onclick="editClick(this.id)" class="hidden text-indigo-600 hover:text-indigo-900" id="${
+                    doc.id
+                  }" style="cursor:pointer;">
+                    Edit
+                  </a>
+                </td>
+              </tr>`;
+                    rows.append(template);
+                  } else {
+                    //이미지가 있을 때
+                    template.innerHTML = `<tr>
+                <td class="px-2 py-4 whitespace-nowrap">
+                  <div class="flex items-center">
+                    <div class="flex-shrink-0 h-10 w-10">
+                      <img
+                        class="h-10 w-10 rounded-full"
+                        src="${doc.data().imgURL}"
+                        onerror="this.src='${noPhoto}';"
+                        alt=""
+                      />
+                    </div>
+                    <div class="ml-4">
+                      <div class="text-sm font-medium text-gray-900">
+                        ${doc.data().name}
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap" id="${
+                  doc.id
+                }" onclick="mainclick(this.id)" style="cursor: pointer">
+                  <div class="text-sm text-gray-900">${doc.data().title}</div>
+                  <div class="text-sm text-gray-500">there's img</div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                   ${doc
+                     .data()
+                     .date.toDate()
+                     .getFullYear()
+                     .toString()
+                     .slice(-2)}/${
+                      doc.data().date.toDate().getMonth() + 1
+                    }/${doc.data().date.toDate().getDate()} ${doc
+                      .data()
+                      .date.toDate()
+                      .getHours()}:${doc
+                      .data()
+                      .date.toDate()
+                      .getMinutes()}:${doc.data().date.toDate().getSeconds()}
+                </span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  ${doc.data().role}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <a onclick="editClick(this.id)" class="hidden text-indigo-600 hover:text-indigo-900" id="${
+                    doc.id
+                  }" style="cursor:pointer;">
+                    Edit
+                  </a>
+                </td>
+              </tr>`;
+                    rows.append(template);
+                  }
+                }
+              });
+          } else {
+            if (doc.data().img == null) {
+              template.innerHTML = `<tr>
+                <td class="px-2 py-4 whitespace-nowrap">
+                  <div class="flex items-center">
+                    <div class="flex-shrink-0 h-10 w-10">
+                      <img
+                        class="h-10 w-10 rounded-full"
+                        src="${doc.data().imgURL}"
+                        onerror="this.src='${noPhoto}';"
+                        alt=""
+                      />
+                    </div>
+                    <div class="ml-4">
+                      <div class="text-sm font-medium text-gray-900">
+                        ${doc.data().name}
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap" id="${
+                  doc.id
+                }" onclick="mainclick(this.id)" style="cursor: pointer">
+                  <div class="text-sm text-gray-900">${doc.data().title}</div>
+                  <div class="text-sm text-gray-500">no image</div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                   ${doc
+                     .data()
+                     .date.toDate()
+                     .getFullYear()
+                     .toString()
+                     .slice(-2)}/${
+                doc.data().date.toDate().getMonth() + 1
+              }/${doc.data().date.toDate().getDate()} ${doc
+                .data()
+                .date.toDate()
+                .getHours()}:${doc.data().date.toDate().getMinutes()}:${doc
+                .data()
+                .date.toDate()
+                .getSeconds()}
+                </span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  ${doc.data().role}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <a onclick="editClick(this.id)" class="hidden text-indigo-600 hover:text-indigo-900" id="${
+                    doc.id
+                  }" style="cursor:pointer;">
+                    Edit
+                  </a>
+                </td>
+              </tr>`;
+              rows.append(template);
+            } else {
+              //이미지가 있을 때
+              template.innerHTML = `<tr>
+                <td class="px-2 py-4 whitespace-nowrap">
+                  <div class="flex items-center">
+                    <div class="flex-shrink-0 h-10 w-10">
+                      <img
+                        class="h-10 w-10 rounded-full"
+                        src="${doc.data().imgURL}"
+                        onerror="this.src='${noPhoto}';"
+                        alt=""
+                      />
+                    </div>
+                    <div class="ml-4">
+                      <div class="text-sm font-medium text-gray-900">
+                        ${doc.data().name}
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap" id="${
+                  doc.id
+                }" onclick="mainclick(this.id)" style="cursor: pointer">
+                  <div class="text-sm text-gray-900">${doc.data().title}</div>
+                  <div class="text-sm text-gray-500">there's img</div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                   ${doc
+                     .data()
+                     .date.toDate()
+                     .getFullYear()
+                     .toString()
+                     .slice(-2)}/${
+                doc.data().date.toDate().getMonth() + 1
+              }/${doc.data().date.toDate().getDate()} ${doc
+                .data()
+                .date.toDate()
+                .getHours()}:${doc.data().date.toDate().getMinutes()}:${doc
+                .data()
+                .date.toDate()
+                .getSeconds()}
+                </span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  ${doc.data().role}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <a onclick="editClick(this.id)" class="hidden text-indigo-600 hover:text-indigo-900" id="${
+                    doc.id
+                  }" style="cursor:pointer;">
+                    Edit
+                  </a>
+                </td>
+              </tr>`;
+              rows.append(template);
+            }
+          }
+        });
       }
       //all the lists
       function morePage() {
@@ -634,6 +877,7 @@
       }
     </script>
     <script>
+      // 편집기능
       const editModal = document.getElementById("edit-modal");
       const editTitle = document.getElementById("title");
       const editContents = document.getElementById("content");
@@ -716,11 +960,11 @@
               contents: document.getElementById("content").value,
             })
             .then(() => {
-              console.log("Document successfully written!");
+              alert("Document successfully written!");
               window.location.href = "./index.html";
             })
             .catch((error) => {
-              console.error("Error writing document: ", error);
+              alert("Error writing document: " + error);
             });
         } else {
           //일단 이미지 지우고
@@ -767,7 +1011,6 @@
                     window.location.href = "./index.html";
                   })
                   .catch((err) => {
-                    console.log(err);
                     alert("수정 실패, 수정 버튼을 다시 눌러주세요.");
                   });
               });
@@ -795,56 +1038,180 @@
           .get()
           .then((items) => {
             items.forEach((mindoc) => {
-              let mainComments = document.getElementById("main-comments");
-              let commentsTemplate = document.createElement("div");
-              document.getElementById("no-comments").className =
-                "flex hidden justify-center border-t border-b py-1";
-              commentsTemplate.innerHTML = `
-              <div class="flex w-full items-center border-t border-b py-1" id='${
-                mindoc.id
-              }'>
-                <div class="-space-x-2 mr-2">
-                  <img
-                    class="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-                    src="${mindoc.data().photo}"
-                    alt=""
-                  />
-                </div>
-                <span class="w-2/12 mr-2">${mindoc.data().name}</span>
-                <span class="w-6/12">${mindoc.data().contents}</span>
-                <span class="w-4/12 text-right mr-2">${mindoc
-                  .data()
-                  .time.toDate()
-                  .getFullYear()
-                  .toString()
-                  .slice(-2)}/${
-                mindoc.data().time.toDate().getMonth() + 1
-              }/${mindoc.data().time.toDate().getDate()} ${mindoc
-                .data()
-                .time.toDate()
-                .getHours()}:${mindoc
-                .data()
-                .time.toDate()
-                .getMinutes()}:${mindoc.data().time.toDate().getSeconds()}
-                </span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="w-5 h-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  style="cursor: pointer"
-                  onclick="commentDelete('${mindoc.id}', '${a}')"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              </div>`;
-              mainComments.append(commentsTemplate);
+              firebase.auth().onAuthStateChanged((user) => {
+                if (user) {
+                  db.collection("Users")
+                    .doc(`${user.email}`)
+                    .get()
+                    .then((info) => {
+                      if (
+                        mindoc.data().name == info.data().nickname ||
+                        info.data().role == "admin"
+                      ) {
+                        let mainComments =
+                          document.getElementById("main-comments");
+                        let commentsTemplate = document.createElement("div");
+                        document.getElementById("no-comments").className =
+                          "flex hidden justify-center border-t border-b py-1";
+                        commentsTemplate.innerHTML = `
+                        <div class="flex w-full items-center border-t border-b py-1" id='${
+                          mindoc.id
+                        }'>
+                          <div class="-space-x-2 mr-2">
+                            <img
+                              class="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+                              src="${mindoc.data().photo}"
+                              alt=""
+                            />
+                          </div>
+                          <span class="w-2/12 mr-2">${mindoc.data().name}</span>
+                          <span class="w-6/12">${mindoc.data().contents}</span>
+                          <span class="w-4/12 text-right mr-2">${mindoc
+                            .data()
+                            .time.toDate()
+                            .getFullYear()
+                            .toString()
+                            .slice(-2)}/${
+                          mindoc.data().time.toDate().getMonth() + 1
+                        }/${mindoc.data().time.toDate().getDate()} ${mindoc
+                          .data()
+                          .time.toDate()
+                          .getHours()}:${mindoc
+                          .data()
+                          .time.toDate()
+                          .getMinutes()}:${mindoc
+                          .data()
+                          .time.toDate()
+                          .getSeconds()}
+                          </span>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="w-5 h-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            style="cursor: pointer"
+                            onclick="commentDelete('${mindoc.id}', '${a}')"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
+                          </svg>
+                        </div>`;
+                        mainComments.append(commentsTemplate);
+                      } else {
+                        let mainComments =
+                          document.getElementById("main-comments");
+                        let commentsTemplate = document.createElement("div");
+                        document.getElementById("no-comments").className =
+                          "flex hidden justify-center border-t border-b py-1";
+                        commentsTemplate.innerHTML = `
+                        <div class="flex w-full items-center border-t border-b py-1" id='${
+                          mindoc.id
+                        }'>
+                          <div class="-space-x-2 mr-2">
+                            <img
+                              class="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+                              src="${mindoc.data().photo}"
+                              alt=""
+                            />
+                          </div>
+                          <span class="w-2/12 mr-2">${mindoc.data().name}</span>
+                          <span class="w-6/12">${mindoc.data().contents}</span>
+                          <span class="w-4/12 text-right mr-2">${mindoc
+                            .data()
+                            .time.toDate()
+                            .getFullYear()
+                            .toString()
+                            .slice(-2)}/${
+                          mindoc.data().time.toDate().getMonth() + 1
+                        }/${mindoc.data().time.toDate().getDate()} ${mindoc
+                          .data()
+                          .time.toDate()
+                          .getHours()}:${mindoc
+                          .data()
+                          .time.toDate()
+                          .getMinutes()}:${mindoc
+                          .data()
+                          .time.toDate()
+                          .getSeconds()}
+                          </span>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="w-5 h-5 hidden"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            style="cursor: pointer"
+                            onclick="commentDelete('${mindoc.id}', '${a}')"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
+                          </svg>
+                        </div>`;
+                        mainComments.append(commentsTemplate);
+                      }
+                    });
+                } else {
+                  let mainComments = document.getElementById("main-comments");
+                  let commentsTemplate = document.createElement("div");
+                  document.getElementById("no-comments").className =
+                    "flex hidden justify-center border-t border-b py-1";
+                  commentsTemplate.innerHTML = `
+                        <div class="flex w-full items-center border-t border-b py-1" id='${
+                          mindoc.id
+                        }'>
+                          <div class="-space-x-2 mr-2">
+                            <img
+                              class="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+                              src="${mindoc.data().photo}"
+                              alt=""
+                            />
+                          </div>
+                          <span class="w-2/12 mr-2">${mindoc.data().name}</span>
+                          <span class="w-6/12">${mindoc.data().contents}</span>
+                          <span class="w-4/12 text-right mr-2">${mindoc
+                            .data()
+                            .time.toDate()
+                            .getFullYear()
+                            .toString()
+                            .slice(-2)}/${
+                    mindoc.data().time.toDate().getMonth() + 1
+                  }/${mindoc.data().time.toDate().getDate()} ${mindoc
+                    .data()
+                    .time.toDate()
+                    .getHours()}:${mindoc
+                    .data()
+                    .time.toDate()
+                    .getMinutes()}:${mindoc.data().time.toDate().getSeconds()}
+                          </span>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="w-5 h-5 hidden"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            style="cursor: pointer"
+                            onclick="commentDelete('${mindoc.id}', '${a}')"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
+                          </svg>
+                        </div>`;
+                  mainComments.append(commentsTemplate);
+                }
+              });
             });
           });
 
@@ -964,7 +1331,6 @@
                       mainComments.append(commentsTemplate);
                     })
                     .catch((err) => {
-                      console.log(err);
                       alert("댓글 업로드 실패, 올리기 버튼을 다시 눌러주세요.");
                     });
                   commentContent.value = "";
@@ -1023,7 +1389,6 @@
                       mainComments.append(commentsTemplate);
                     })
                     .catch((err) => {
-                      console.log(err);
                       alert("댓글 업로드 실패, 올리기 버튼을 다시 눌러주세요.");
                     });
                   commentContent.value = "";
