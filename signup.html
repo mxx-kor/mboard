@@ -6,9 +6,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Mboard</title>
   </head>
-  <body>
+  <body class="dark:bg-gray-800">
     <div>
-      <div class="px-4 py-3 bg-gray-50 flex justify-between sm:px-6">
+      <div
+        class="px-4 py-3 bg-gray-50 flex justify-between sm:px-6 dark:text-gray-400 dark:bg-gray-800"
+      >
         <h2 class="text-4xl font-extrabold tracking-tight" onclick="goHome()">
           Mboard
         </h2>
@@ -64,10 +66,12 @@
       </div>
     </div>
 
-    <div class="flex w-full h-3/4 items-center justify-center">
+    <div class="flex w-full h-3/4 items-center justify-center dark:bg-gray-800">
       <div class="container min-w-fit w-1/4 mt-10 shadow-lg rounded-md">
-        <h2 class="font-extrabold text-xl text-center mb-3">회원 가입</h2>
-        <div class="mb-3 text-center">
+        <h2 class="font-extrabold text-xl text-center mb-3 dark:text-gray-400">
+          회원 가입
+        </h2>
+        <div class="mb-3 text-center dark:text-gray-400">
           <p>nickname</p>
           <input
             type="text"
@@ -76,7 +80,7 @@
             id="nick-new"
           />
         </div>
-        <div class="mb-3 text-center">
+        <div class="mb-3 text-center dark:text-gray-400">
           <p>Email</p>
           <input
             type="email"
@@ -85,7 +89,7 @@
             id="email-new"
           />
         </div>
-        <div class="mb-5 text-center">
+        <div class="mb-5 text-center dark:text-gray-400">
           <p>password</p>
           <input
             type="password"
@@ -95,12 +99,12 @@
             onkeyup="enterkey()"
           />
         </div>
-        <div class="text-center">
+        <div class="text-center dark:text-gray-400">
           <span class="font-light text-sm"
             >비밀번호는 6글자 이상이여야 합니다.</span
           >
         </div>
-        <div class="mb-5 pt-2 text-center">
+        <div class="mb-5 pt-2 text-center dark:text-gray-400">
           <span class="font-light text-sm">
             프로필 변경은 로그인하신 후 설정해주세요.
           </span>

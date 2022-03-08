@@ -192,14 +192,14 @@
         id="main-modal-absoulte"
       >
         <div
-          class="bg-white mt-20 mb-36 items-center rounded-md max-w-7xl lg:pt-4 pt-4 mx-auto px-4 sm:px-6 lg:px-8 lg:flex-col lg:items-center lg:justify-between"
+          class="bg-white dark:bg-gray-700 mt-20 mb-36 items-center rounded-md max-w-7xl lg:pt-4 pt-4 mx-auto px-4 sm:px-6 lg:px-8 lg:flex-col lg:items-center lg:justify-between"
         >
           <h2
-            class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-2xl"
+            class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-2xl dark:text-gray-400"
           >
             <span class="block border-b pb-2" id="main-title"></span>
             <span
-              class="mt-2 block text-indigo-600 text-lg"
+              class="mt-2 block text-indigo-600 text-lg dark:text-gray-400"
               id="main-content"
             ></span>
             <img
@@ -212,16 +212,17 @@
             class="flex-col w-full mt-4 justify-center items-center"
             style="min-width: 500px"
           >
-            <div class="bg-white w-full">
+            <div class="bg-white w-full dark:bg-gray-700">
               <div class="flex-col w-full mb-2" id="main-comments">
-                <span class="text-indigo-600 font-semibold text-lg"
+                <span
+                  class="text-indigo-600 dark:text-gray-400 font-semibold text-lg"
                   >Comments</span
                 >
                 <div
                   class="flex justify-center border-t border-b py-1"
                   id="no-comments"
                 >
-                  <div class="-space-x-2">댓글 없음</div>
+                  <div class="-space-x-2 dark:text-gray-400">댓글 없음</div>
                 </div>
               </div>
               <div class="flex items-center ml-3" id="with-login1">
@@ -234,7 +235,10 @@
                   />
                 </div>
                 <div>
-                  <h1 class="font-semibold" id="comments-nick">
+                  <h1
+                    class="font-semibold dark:text-gray-400"
+                    id="comments-nick"
+                  >
                     사용자 정보없음
                   </h1>
                 </div>
@@ -252,7 +256,7 @@
               <div class="flex my-2 justify-end" id="with-login3">
                 <div>
                   <button
-                    class="px-4 py-1 bg-gray-800 text-white rounded-md font-light hover:bg-gray-700"
+                    class="px-4 py-1 bg-gray-800 text-white rounded-md font-light hover:bg-gray-700 dark:bg-indigo-600"
                     id="comment-submit"
                     onclick="submitClick(this.ariaLabel)"
                   >
