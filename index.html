@@ -1511,7 +1511,7 @@
           .signOut()
           .then(() => {
             alert("로그아웃되었습니다.");
-            window.location.reload();
+            window.location.href = "./index.html";
           })
           .catch((error) => {
             alert(error.message);
