@@ -6,7 +6,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Mboard</title>
   </head>
-  <body class="relative">
+  <body class="relative dark:bg-gray-800">
     <div>
       <div
         class="px-4 py-3 bg-gray-50 flex justify-between sm:px-6 dark:text-gray-400 dark:bg-gray-800"
@@ -69,10 +69,10 @@
       <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
           <div
-            class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg dark:text-gray-400 dark:bg-gray-800"
+            class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
           >
             <table class="min-w-full divide-y divide-gray-200">
-              <thead class="bg-gray-50">
+              <thead class="bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                 <tr>
                   <th
                     scope="col"
@@ -117,7 +117,7 @@
     >
       <div class="sm:flex-1 sm:flex sm:items-center sm:justify-between">
         <div>
-          <p class="text-sm text-gray-700">
+          <p class="text-sm text-gray-700 dark:text-gray-400">
             현재 페이지
             <span class="font-medium" id="page-num">1</span>
             page of
@@ -484,7 +484,7 @@
                       />
                     </div>
                     <div class="ml-4">
-                      <div class="text-sm font-medium text-gray-900">
+                      <div class="text-sm font-medium text-gray-900 dark:text-gray-400">
                         ${doc.data().name}
                       </div>
                     </div>
@@ -493,7 +493,9 @@
                 <td class="px-6 py-4 whitespace-nowrap" id="${
                   doc.id
                 }" onclick="mainclick(this.id)" style="cursor: pointer">
-                  <div class="text-sm text-gray-900">${doc.data().title}</div>
+                  <div class="text-sm text-gray-900 dark:text-gray-400">${
+                    doc.data().title
+                  }</div>
                   <div class="text-sm text-gray-500">no image</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
@@ -514,7 +516,7 @@
                       .getMinutes()}:${doc.data().date.toDate().getSeconds()}
                 </span>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                   ${doc.data().role}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -540,7 +542,7 @@
                       />
                     </div>
                     <div class="ml-4">
-                      <div class="text-sm font-medium text-gray-900">
+                      <div class="text-sm font-medium text-gray-900 dark:text-gray-400">
                         ${doc.data().name}
                       </div>
                     </div>
@@ -549,7 +551,9 @@
                 <td class="px-6 py-4 whitespace-nowrap" id="${
                   doc.id
                 }" onclick="mainclick(this.id)" style="cursor: pointer">
-                  <div class="text-sm text-gray-900">${doc.data().title}</div>
+                  <div class="text-sm text-gray-900 dark:text-gray-400">${
+                    doc.data().title
+                  }</div>
                   <div class="text-sm text-gray-500">there's img</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
@@ -570,7 +574,7 @@
                       .getMinutes()}:${doc.data().date.toDate().getSeconds()}
                 </span>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                   ${doc.data().role}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -598,7 +602,7 @@
                       />
                     </div>
                     <div class="ml-4">
-                      <div class="text-sm font-medium text-gray-900">
+                      <div class="text-sm font-medium text-gray-900 dark:text-gray-400">
                         ${doc.data().name}
                       </div>
                     </div>
@@ -607,7 +611,9 @@
                 <td class="px-6 py-4 whitespace-nowrap" id="${
                   doc.id
                 }" onclick="mainclick(this.id)" style="cursor: pointer">
-                  <div class="text-sm text-gray-900">${doc.data().title}</div>
+                  <div class="text-sm text-gray-900 dark:text-gray-400">${
+                    doc.data().title
+                  }</div>
                   <div class="text-sm text-gray-500">no image</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
@@ -628,7 +634,7 @@
                       .getMinutes()}:${doc.data().date.toDate().getSeconds()}
                 </span>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                   ${doc.data().role}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -654,7 +660,7 @@
                       />
                     </div>
                     <div class="ml-4">
-                      <div class="text-sm font-medium text-gray-900">
+                      <div class="text-sm font-medium text-gray-900 dark:text-gray-400">
                         ${doc.data().name}
                       </div>
                     </div>
@@ -663,7 +669,9 @@
                 <td class="px-6 py-4 whitespace-nowrap" id="${
                   doc.id
                 }" onclick="mainclick(this.id)" style="cursor: pointer">
-                  <div class="text-sm text-gray-900">${doc.data().title}</div>
+                  <div class="text-sm text-gray-900 dark:text-gray-400">${
+                    doc.data().title
+                  }</div>
                   <div class="text-sm text-gray-500">there's img</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
@@ -684,7 +692,7 @@
                       .getMinutes()}:${doc.data().date.toDate().getSeconds()}
                 </span>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                   ${doc.data().role}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -713,7 +721,7 @@
                       />
                     </div>
                     <div class="ml-4">
-                      <div class="text-sm font-medium text-gray-900">
+                      <div class="text-sm font-medium text-gray-900 dark:text-gray-400">
                         ${doc.data().name}
                       </div>
                     </div>
@@ -722,7 +730,9 @@
                 <td class="px-6 py-4 whitespace-nowrap" id="${
                   doc.id
                 }" onclick="mainclick(this.id)" style="cursor: pointer">
-                  <div class="text-sm text-gray-900">${doc.data().title}</div>
+                  <div class="text-sm text-gray-900 dark:text-gray-400">${
+                    doc.data().title
+                  }</div>
                   <div class="text-sm text-gray-500">no image</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
@@ -743,7 +753,7 @@
                 .getSeconds()}
                 </span>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                   ${doc.data().role}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -769,7 +779,7 @@
                       />
                     </div>
                     <div class="ml-4">
-                      <div class="text-sm font-medium text-gray-900">
+                      <div class="text-sm font-medium text-gray-900 dark:text-gray-400">
                         ${doc.data().name}
                       </div>
                     </div>
@@ -778,7 +788,9 @@
                 <td class="px-6 py-4 whitespace-nowrap" id="${
                   doc.id
                 }" onclick="mainclick(this.id)" style="cursor: pointer">
-                  <div class="text-sm text-gray-900">${doc.data().title}</div>
+                  <div class="text-sm text-gray-900 dark:text-gray-400">${
+                    doc.data().title
+                  }</div>
                   <div class="text-sm text-gray-500">there's img</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
@@ -799,7 +811,7 @@
                 .getSeconds()}
                 </span>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                   ${doc.data().role}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
