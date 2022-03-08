@@ -9,7 +9,9 @@
   <body>
     <div>
       <div class="px-4 py-3 bg-gray-50 flex justify-between sm:px-6">
-        <h2 class="text-4xl font-extrabold tracking-tight">Mboard</h2>
+        <h2 class="text-4xl font-extrabold tracking-tight" onclick="goHome()">
+          Mboard
+        </h2>
         <div
           id="nav-bar-info"
           class="flex"
@@ -155,6 +157,9 @@
       }
     </script>
     <script>
+      function goHome() {
+        window.location.href = "./index.html";
+      }
       //로그인 되어있는지 확인 후 프로필 설정, 버튼 재 설정
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {

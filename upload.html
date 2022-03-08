@@ -9,7 +9,7 @@
   <body>
 
     <div class="px-4 py-3 bg-gray-50 flex justify-between sm:px-6">
-      <h2 class="text-4xl font-extrabold tracking-tight">Mboard</h2>
+      <h2 class="text-4xl font-extrabold tracking-tight" onclick="goHome()">Mboard</h2>
       <div
         id="nav-bar-info"
         class="flex"
@@ -108,6 +108,9 @@
       firebase.initializeApp(firebaseConfig);
     </script>
     <script>
+      function goHome() {
+        window.location.href = "./index.html";
+      }
       const db = firebase.firestore();
       const storage = firebase.storage();
       function inputValue() {
