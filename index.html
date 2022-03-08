@@ -1076,7 +1076,7 @@
                           document.getElementById("main-comments");
                         let commentsTemplate = document.createElement("div");
                         document.getElementById("no-comments").className =
-                          "flex hidden justify-center border-t border-b py-1";
+                          "flex hidden justify-center border-t border-b py-1 dark:text-gray-400";
                         commentsTemplate.innerHTML = `
                         <div class="flex w-full items-center border-t border-b py-1" id='${
                           mindoc.id
@@ -1088,9 +1088,13 @@
                               alt=""
                             />
                           </div>
-                          <span class="w-2/12 mr-2">${mindoc.data().name}</span>
-                          <span class="w-6/12">${mindoc.data().contents}</span>
-                          <span class="w-4/12 text-right mr-2">${mindoc
+                          <span class="w-2/12 mr-2 dark:text-gray-400">${
+                            mindoc.data().name
+                          }</span>
+                          <span class="w-6/12 dark:text-gray-400">${
+                            mindoc.data().contents
+                          }</span>
+                          <span class="w-4/12 text-right mr-2 dark:text-gray-400">${mindoc
                             .data()
                             .time.toDate()
                             .getFullYear()
@@ -1110,7 +1114,7 @@
                           </span>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5"
+                            class="w-5 h-5 dark:text-gray-400"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -1133,7 +1137,7 @@
                         document.getElementById("no-comments").className =
                           "flex hidden justify-center border-t border-b py-1";
                         commentsTemplate.innerHTML = `
-                        <div class="flex w-full items-center border-t border-b py-1" id='${
+                        <div class="flex w-full items-center border-t border-b py-1 dark:text-gray-400" id='${
                           mindoc.id
                         }'>
                           <div class="-space-x-2 mr-2">
@@ -1143,9 +1147,13 @@
                               alt=""
                             />
                           </div>
-                          <span class="w-2/12 mr-2">${mindoc.data().name}</span>
-                          <span class="w-6/12">${mindoc.data().contents}</span>
-                          <span class="w-4/12 text-right mr-2">${mindoc
+                          <span class="w-2/12 mr-2 dark:text-gray-400">${
+                            mindoc.data().name
+                          }</span>
+                          <span class="w-6/12 dark:text-gray-400">${
+                            mindoc.data().contents
+                          }</span>
+                          <span class="w-4/12 text-right mr-2 dark:text-gray-400">${mindoc
                             .data()
                             .time.toDate()
                             .getFullYear()
@@ -1165,7 +1173,7 @@
                           </span>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 hidden"
+                            class="w-5 h-5 hidden dark:text-gray-400"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -1187,9 +1195,9 @@
                   let mainComments = document.getElementById("main-comments");
                   let commentsTemplate = document.createElement("div");
                   document.getElementById("no-comments").className =
-                    "flex hidden justify-center border-t border-b py-1";
+                    "flex hidden justify-center border-t border-b py-1 dark:text-gray-400";
                   commentsTemplate.innerHTML = `
-                        <div class="flex w-full items-center border-t border-b py-1" id='${
+                        <div class="flex w-full items-center border-t border-b py-1 dark:text-gray-400" id='${
                           mindoc.id
                         }'>
                           <div class="-space-x-2 mr-2">
@@ -1199,9 +1207,13 @@
                               alt=""
                             />
                           </div>
-                          <span class="w-2/12 mr-2">${mindoc.data().name}</span>
-                          <span class="w-6/12">${mindoc.data().contents}</span>
-                          <span class="w-4/12 text-right mr-2">${mindoc
+                          <span class="w-2/12 mr-2 dark:text-gray-400">${
+                            mindoc.data().name
+                          }</span>
+                          <span class="w-6/12 dark:text-gray-400">${
+                            mindoc.data().contents
+                          }</span>
+                          <span class="w-4/12 text-right mr-2 dark:text-gray-400">${mindoc
                             .data()
                             .time.toDate()
                             .getFullYear()
@@ -1319,7 +1331,7 @@
                       let commentsTemplate = document.createElement("div");
                       document.getElementById("no-comments").className =
                         "flex hidden justify-center border-t border-b py-1";
-                      commentsTemplate.innerHTML = `<div class="flex w-full items-center border-t border-b py-1 dark:bg-gray-400" 
+                      commentsTemplate.innerHTML = `<div class="flex w-full items-center border-t border-b py-1 dark:text-gray-400" 
                     id="${doc.id}">
                       <div class="-space-x-2 mr-2">
                         <img
@@ -1329,16 +1341,20 @@
                           onerror="this.src='${noPhoto}';"
                         />
                       </div>
-                      <span class="w-2/12 mr-2">${objects.name}</span>
-                      <span class="w-6/12">${objects.contents}</span>
-                      <span class="w-4/12 text-right mr-2">
+                      <span class="w-2/12 mr-2 dark:text-gray-400">${
+                        objects.name
+                      }</span>
+                      <span class="w-6/12 dark:text-gray-400">${
+                        objects.contents
+                      }</span>
+                      <span class="w-4/12 text-right mr-2 dark:text-gray-400">
                         ${objects.time.getFullYear().toString().slice(-2)}/${
                         objects.time.getMonth() + 1
                       }/${objects.time.getDate()} ${objects.time.getHours()}:${objects.time.getMinutes()}:${objects.time.getSeconds()}
                       </span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        class="w-5 h-5"
+                        class="w-5 h-5 dark:text-gray-400"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -1378,7 +1394,7 @@
                       let commentsTemplate = document.createElement("div");
                       document.getElementById("no-comments").className =
                         "flex hidden justify-center border-t border-b py-1";
-                      commentsTemplate.innerHTML = `<div class="flex w-full items-center border-t border-b py-1 dark:bg-gray-400" 
+                      commentsTemplate.innerHTML = `<div class="flex w-full items-center border-t border-b py-1 dark:text-gray-400" 
                     id="${doc.id}">
                       <div class="-space-x-2 mr-2">
                         <img
@@ -1388,16 +1404,20 @@
                           onerror="this.src="${noPhoto}";"
                         />
                       </div>
-                      <span class="w-2/12 mr-2">${objects.name}</span>
-                      <span class="w-6/12">${objects.contents}</span>
-                      <span class="w-4/12 text-right mr-2">
+                      <span class="w-2/12 mr-2 dark:text-gray-400">${
+                        objects.name
+                      }</span>
+                      <span class="w-6/12 dark:text-gray-400">${
+                        objects.contents
+                      }</span>
+                      <span class="w-4/12 text-right mr-2 dark:text-gray-400">
                         ${objects.time.getFullYear().toString().slice(-2)}/${
                         objects.time.getMonth() + 1
                       }/${objects.time.getDate()} ${objects.time.getHours()}:${objects.time.getMinutes()}:${objects.time.getSeconds()}
                       </span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        class="w-5 h-5"
+                        class="w-5 h-5 dark:text-gray-400"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
