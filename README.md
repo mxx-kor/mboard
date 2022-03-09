@@ -1,4 +1,4 @@
-# 게시판 프로젝트 with Tailwind, Firebase
+# 게시판 프로젝트 with Tailwind CSS, Firebase
 
 ---
 
