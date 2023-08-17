@@ -613,7 +613,7 @@ function rewrite(a) {
               alert('수정 성공');
               window.location.href = './index.html';
             })
-            .catch((err) => {
+            .catch(() => {
               alert('수정 실패, 수정 버튼을 다시 눌러주세요.');
             });
         });
@@ -849,7 +849,7 @@ function mainclick(a) {
       mainTitle.innerText = `에러 발생 : ${error}`;
     });
 }
-function mainXClick(a) {
+function mainXClick() {
   mainModal.className = 'bg-gray-50 hidden container';
   mainTitle.innerText = ``;
   mainContent.innerText = ``;
@@ -939,7 +939,7 @@ function submitClick(a) {
                     </div>`;
                 mainComments.append(commentsTemplate);
               })
-              .catch((err) => {
+              .catch(() => {
                 alert('댓글 업로드 실패, 올리기 버튼을 다시 눌러주세요.');
               });
             commentContent.value = '';
@@ -1001,7 +1001,7 @@ function submitClick(a) {
                     </div>`;
                 mainComments.append(commentsTemplate);
               })
-              .catch((err) => {
+              .catch(() => {
                 alert('댓글 업로드 실패, 올리기 버튼을 다시 눌러주세요.');
               });
             commentContent.value = '';

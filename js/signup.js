@@ -12,7 +12,7 @@ function clickSignUp() {
   firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
-    .then((result) => {
+    .then(() => {
       db.collection('Users')
         .doc(`${email}`)
         .set({
@@ -69,7 +69,7 @@ function enterkey() {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then((result) => {
+      .then(() => {
         db.collection('Users')
           .doc(`${email}`)
           .set({

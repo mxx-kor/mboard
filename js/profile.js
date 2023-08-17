@@ -197,7 +197,7 @@ function deleteUser(a) {
           .then(() => {
             alert('프로필 사진이 삭제되었습니다.');
           })
-          .catch((error) => {
+          .catch(() => {
             alert('이미지 삭제하다 오류!');
           });
         db.collection('Users').doc(`${a}`).delete();

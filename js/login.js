@@ -6,13 +6,12 @@ function clickLogIn() {
   firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
+    .then(() => {
       // Signed in
       alert('로그인 성공');
       window.location.href = './index.html';
     })
     .catch((error) => {
-      let errorCode = error.code;
       let errorMessage = error.message;
       alert(errorMessage);
     });
@@ -24,13 +23,12 @@ function enterkey() {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then((userCredential) => {
+      .then(() => {
         // Signed in
         alert('로그인 성공');
         window.location.href = './index.html';
       })
       .catch((error) => {
-        let errorCode = error.code;
         let errorMessage = error.message;
         alert(errorMessage);
       });
